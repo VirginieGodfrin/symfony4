@@ -38,7 +38,7 @@ class ArticleController extends AbstractController {
 		];
 
 		//dump the $slug and the controller object 
-		dump($slug, $this); 
+		// dump($slug, $this); 
 
 		return $this->render('article/show.html.twig', [
 			'title' => $slug,
