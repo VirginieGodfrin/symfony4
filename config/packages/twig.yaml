@@ -1,0 +1,5 @@
+twig:
+    paths: ['%kernel.project_dir%/templates']
+    debug: '%kernel.debug%'
+    strict_variables: '%kernel.debug%'
+    # % kernel.project_dir% est une variable qui pointe vers la racine du projet.
