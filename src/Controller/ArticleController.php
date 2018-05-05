@@ -9,20 +9,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ArticleController extends AbstractController { 
 
 	/**
-	 * @Route("/")
+	 * @Route("/", name="app_homepage")
 	 */
 
 	public function homepage(){
 
-		return new Response('Hello welkome home !');
+		return $this->render('article/homepage.html.twig');
 
 	}
 
 	/**
-	* @Route("/news/{slug}")
+	* @Route("/news/{slug}", name="article_show")
 	*/
-	public function show($slug)
-	{
+	public function show($slug){
 		//sprintf — Retourne une chaîne formatée
 		// return new Response(sprintf('Future page to show the article: "%s"', $slug));
 		// return new Response('Future page to show the article:'. $slug);
