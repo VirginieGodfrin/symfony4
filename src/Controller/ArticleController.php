@@ -6,6 +6,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Psr\Log\LoggerInterface;
+use Twig\Environment;
 
 class ArticleController extends AbstractController { 
 
@@ -22,8 +24,8 @@ class ArticleController extends AbstractController {
 	/**
 	* @Route("/news/{slug}", name="article_show")
 	*/
-	public function show($slug){
-		//sprintf — Retourne une chaîne formatée
+	public function show($slug, Environment $twigEnvironement ){
+		// sprintf — Retourne une chaîne formatée
 		// return new Response(sprintf('Future page to show the article: "%s"', $slug));
 		// return new Response('Future page to show the article:'. $slug);
 
@@ -37,22 +39,35 @@ class ArticleController extends AbstractController {
 			'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque voluptas labore ea unde incidunt. Facilis assumenda, error placeat commodi, aliquam praesentium quia labore voluptatem quisquam sunt non itaque quasi fuga!'
 		];
 
-		//dump the $slug and the controller object 
+		// dump the $slug and the controller object 
 		// dump($slug, $this); 
 
-		return $this->render('article/show.html.twig', [
+		// return $this->render('article/show.html.twig', [
+		// 	'title' => $slug,
+		// 	'comments' => $comments,
+		// 	'slug' => $slug,
+		// ]);
+
+		// utilisation du service twig : 
+		
+		$html = $twigEnvironement->render('article/show.html.twig', [ 
 			'title' => $slug,
 			'comments' => $comments,
 			'slug' => $slug,
 		]);
+		return new Response($html);
+
+		
 	}
 
 
 	/**
 	* @Route("/news/{slug}/heart", name="article_toggle_heart", methods={"POST"})
 	*/
-	public function toggleArticleHeart($slug)
+	public function toggleArticleHeart($slug, LoggerInterface $logger)
 	{
+		// service de log
+		$logger->info('All right !');
 		// return new Response(json_encode(['hearts' => 5])) 
 		return new JsonResponse(['hearts' => rand(5, 100)]);
 	}
